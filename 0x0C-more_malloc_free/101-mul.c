@@ -1,99 +1,90 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-#define ERR_MSG "Error"
 /**
- * is_digit - check if a string contains a non-digit char
- * @s: string to be evaluated
+ * _puts - print a string followed by a new line
+ * @str: pointer to the string to print
  *
- * Return: 0 if a nondigit is found and 1 if digit is found
+ * Return: void
  */
-int is_digit(char *s)
+void _puts(char *str)
 {
 	int i = 0;
 
-	while (s[i])
+	while (str[i])
 	{
-		if (s[i] < '0' || s[i] > '9')
-			return (0);
+		_putchar(str[i]);
 		i++;
 	}
-	return (1);
+}
 
 /**
- * _strlen - return the length of a string
- * @s: string to be evaluated
+ * _atoi - convert a string to an integer
+ * @s: char type string
  *
- * Return: length of the string
+ * Return: integer converted
  */
-
-int _strlen(char *s)
+int _atoi(const char *s)
 {
-	int i = 0;
+	int sign = 1;
+	unsigned long int resp = 0, firstNUM, i;
 
-	while (s[i] != '\0')
+	for (firstNUM = 0; !(s[firstNUM] >= 48 && s[firstNUM] <= 57); firstNUM++)
 	{
-		i++;
+		if (s[firstNUM] == '-')
+		{
+			sign *= -1;
+		}
 	}
-	return (i);
+	for (i = firstNUM; s[i] >= 48 && s[i] <= 57; i++)
+	{
+		resp *= 10;
+		resp += (s[i] - 48);
+	}
+	return (sign * resp);
 }
 
 /**
- * error - handle the main errors
- */
-void error()
-{
-	printf("Error\n");
-	exit(98);
-}
-
-/**
- * main - multiply two positive numbers
- * @argc: argument count
- * @argv: argument vector
+ * print_int - prints an integer
+ * @n: int
  *
  * Return: 0
  */
-int main(int argc, char *argv[])
-{
-	char *s1, *s2;
-	int len1, len2, len, i, carry, digit1, digit2, *result, a = 0;
 
-	s1 = argv[1], s2 = argv[2];
-	if (argc != 3 || !is_digit(s1) || !is_digit(s2))
-		error();
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-	len = len1 + len2 + 1;
-	result = malloc(sizeof(int) + len);
-		if (!result)
-			return (1);
-	for (i = 0; i <= len1 + len2; i++)
-		result[i] = 0;
-	for (len1 = len2 - 1; len1 >= 0; len1--)
+void print_int(unsigned long int n)
+{
+	unsigned long int divisor = 1, i, resp;
+
+	for (i = 0; n / divisor > 9; i++, divisor *= 10)
+		;
+	for (; divisor >= 1; n %= divisor, divisor /= 10)
 	{
-		digit1 = s1[len] - '\0';
-		carry = 0;
-		for (len2 = len2 - 1; len2 >= 0; len2--)
-		{
-			digit2 = s2[len2] - '0';
-		carry += result[len1 + len2 + 1] + (digit1 + digit2);
-		result[len1 + len2 + 1] = carry % 10;
-		carry /= 10;
+		resp = n / divisor;
+		_putchar('0' + resp);
 	}
-	if (carry > 0)
-		result[len1 + len2 + 1] += carry;
-	}
-	for (i = 0; i < len - 1; i++)
+}
+
+/**
+ * main - print the result of the multiplication
+ * followed by a new line
+ * @argc: int
+ * @argv: list
+ *
+ * Return: 0
+ */
+
+int main(int argc, char const *argv[])
+{
+	(void)argc;
+
+	if (argc != 3)
 	{
-		if (result[i])
-			a = 1;
-		if (a)
-			_putchar(result[i] + '0');
+		_puts("Error");
+		exit(98);
 	}
-	if (!a)
-		_putchar('0');
+	print_int(_atoi(argv[1] * _atoi(argv[2]))
+		;
 	_putchar('\n');
-	free(result);
+
+	return (0);
 }

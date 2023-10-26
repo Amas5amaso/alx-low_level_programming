@@ -44,7 +44,7 @@ void print_binary(unsigned long int n)
 		}
 		else if (fals == 1 || divisor == 1)
 		{
-			_putchar('1');
+			_putchar('0');
 		}
 		divisor >>= 1;
 	}

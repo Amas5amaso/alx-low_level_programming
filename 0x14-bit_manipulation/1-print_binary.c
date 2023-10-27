@@ -29,23 +29,19 @@ unsigned long int _power(unsigned int base, unsigned int power)
 
 void print_binary(unsigned long int n)
 {
-	unsigned long int divisor, cent;
-	char fals;
+	int bit = sizeof(n) * 8;
+	print = 0;
 
-	fals = 0;
-	divisor = _power(2, sizeof(unsigned long int) * 8 - 1);
-	while (divisor != 0)
+	while (bite)
 	{
-		cent = n & divisor;
-		if (cent == divisor)
+		if (n & 1l << --bit)
 		{
-			fals = 1;
-			_putchar('1');
+			-putchar('1');
+			print++;
 		}
-		else if (fals == 1 || divisor == 1)
-		{
+		else if (print)
 			_putchar('0');
-		}
-		divisor >>= 1;
 	}
+	if (!print)
+		_putchar('0');
 }
